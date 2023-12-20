@@ -1,0 +1,16 @@
+.ligne{
+    display: grid;
+    grid-template-columns: 70px 70px 70px;
+    grid-gap: 0px;
+}
+
+.case{
+    height: 70px;
+}
+
+.boardWon{
+    height: 210px;
+    width: 210px;
+
+    font-size: 5em;
+}

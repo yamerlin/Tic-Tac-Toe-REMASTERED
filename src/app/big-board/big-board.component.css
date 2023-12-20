@@ -1,0 +1,16 @@
+/*--posXOfSquareToHighlight
+--posYOfSquareToHighlight*/
+
+.ligne{
+    display: grid;
+    grid-template-columns: 210px 210px 210px;
+}
+
+.case{
+    height: 210px;
+    border: 2px blue solid;
+}
+
+.ligne:nth-child(2) .case:nth-child(2){
+    border: 2px red solid;
+}

@@ -1,0 +1,11 @@
+<button class="boardWon" *ngIf="isWon==true">{{winner}}</button>
+
+<main>
+    <div class="ligne" *ngFor="let ligne of square; let indexLigne = index">
+        <div class="case" *ngFor="let case of ligne; let indexColonne = index" (click)="getPosLittleSquare(indexLigne, indexColonne)" (click)="makeMove(indexLigne, indexColonne)">
+            <app-square *ngIf="isWon==false" [value]=case/>
+        </div>
+    </div>
+</main>
+
+
