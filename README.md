@@ -1,27 +1,43 @@
 # TicTacToeREMASTERED
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+To run this project you will need :
+- [Angular CLI](https://github.com/angular/angular-cli) version 17.x
+- [Node.js](https://nodejs.org/en/download/current) version 21.x
 
-## Development server
+You can install everything this way (using [Node Version Manager](https://github.com/nvm-sh/nvm) for simplicity) :
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
-## Code scaffolding
+$ nvm install 21
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+$ nvm use 21
 
-## Build
+$ npm install -g @angular/cli@17.0.6
+``` 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Play on Development server
 
-## Running unit tests
+Use this command in the project folder to open dev server and play :
+```
+$ nvm use 21
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+$ ng serve --open
+``` 
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# What's this game ?
 
-## Further help
+This game is a Tic-Tac-Toe game but with 9 grids simultaneously !
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The goal is to align 3 of your symbol (X or O) in the big grid, in a row, column, or diagonal pattern.
+To get a symbol in the grid you need to win in a small grid.
+The position of your move in a small grid determine the position of your opponent next move in the big grid, and will be highlighted in red (you can only play in the red hightlighted grid).
+
+## Screenshots from development phase :
+
+![Alt text](image-2.png)
+
+![Alt text](image.png)
+
+![Alt text](image-1.png)
