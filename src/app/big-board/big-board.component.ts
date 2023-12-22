@@ -1,4 +1,6 @@
 import { Component , OnInit } from '@angular/core';
+import { flush } from '@angular/core/testing';
+import { UntypedFormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-big-board',
@@ -14,6 +16,11 @@ export class BigBoardComponent implements OnInit {
   player: string;
   posXOfSquareToHighlight: number;
   posYOfSquareToHighlight: number;
+  indexLigne: number;
+  indexColonne: number;
+  clickable: boolean; //pouvoir cliquer seulement si c'est une case rouge
+
+  arrayOfFullBoard: number[][];
 
   constructor(){
     this.overallWinner = "null";
@@ -27,11 +34,21 @@ export class BigBoardComponent implements OnInit {
       [0,0,0],
       [0,0,0]
     ];
+    this.arrayOfFullBoard = [
+      [0,0,0],
+      [0,0,0],
+      [0,0,0]
+    ];
     this.isOverallWon = false;
     this.player = 'X';
 
     this.posXOfSquareToHighlight = 1;
     this.posYOfSquareToHighlight = 1;
+
+    this.indexLigne = 0;
+    this.indexColonne = 0;
+
+    this.clickable = false;
   }
 
   ngOnInit(): void {
@@ -50,6 +67,11 @@ export class BigBoardComponent implements OnInit {
       [0,0,0],
       [0,0,0]
     ];
+    this.arrayOfFullBoard = [
+      [0,0,0],
+      [0,0,0],
+      [0,0,0]
+    ];
     this.isOverallWon = false;
     this.player = 'X';
   }
@@ -59,6 +81,15 @@ export class BigBoardComponent implements OnInit {
     for(let i = 0; i<3; i++){
       for(let j = 0; j<3; j++){
         console.log(this.grilleOfBoardWon[i][j]);
+      }
+    }
+  }*/
+
+  /*
+  seeFullBoard(){
+    for(let i = 0; i<3; i++){
+      for(let j = 0; j<3; j++){
+        console.log(this.arrayOfFullBoard[i][j]);
       }
     }
   }*/
@@ -79,11 +110,45 @@ export class BigBoardComponent implements OnInit {
   }
 
   hightlightSquare(objectPosOfSquareToHightlight: PosOfSquareToHightlight){
-    this.posXOfSquareToHighlight = objectPosOfSquareToHightlight.posX;
-    this.posYOfSquareToHighlight = objectPosOfSquareToHightlight.posY;
+    let x = objectPosOfSquareToHightlight.posX;
+    let y = objectPosOfSquareToHightlight.posY;
+
+    while(this.arrayOfFullBoard[x][y] == 1){
+      y = y + 1;
+      if(y > 2 ){
+        y = 0;
+        x = x+1;
+      }
+
+      if(x > 2){
+        x = 0;
+      }
+    }
+
+    this.posXOfSquareToHighlight = x;
+    this.posYOfSquareToHighlight = y;
 
     console.log("pos X OfSquareToHighlight : " + this.posXOfSquareToHighlight);
     console.log("pos Y OfSquareToHighlight : " + this.posYOfSquareToHighlight);
+  }
+
+  changeClickable(posX:number, posY:number){
+    if(posX == this.posXOfSquareToHighlight && posY == this.posYOfSquareToHighlight){
+      this.clickable = true;
+    }
+    else{
+      this.clickable = false;
+    }
+  }
+
+  putDataInArrayOfFullBoard(objectBoardFull: BoardFull){
+    this.arrayOfFullBoard[objectBoardFull.posX][objectBoardFull.posY] = 1;
+    console.log(objectBoardFull.posX);
+    console.log(objectBoardFull.posY);
+    console.log("Data rentrééé !!!");
+
+    let objectPosOfSquareToHightlight: PosOfSquareToHightlight = new PosOfSquareToHightlight(objectBoardFull.posX, objectBoardFull.posY);
+    this.hightlightSquare(objectPosOfSquareToHightlight);
   }
 
   changePlayer(){
@@ -183,5 +248,17 @@ class PosOfSquareToHightlight{
   constructor(posX: number, posY: number){
     this.posX = posX;
     this.posY = posY;
+  }
+}
+
+class BoardFull{
+  posX: number;
+  posY: number;
+  isBoardFull: boolean;
+
+  constructor(posX:number, posY: number, isBoardFull: boolean){
+    this.posX = posX;
+    this.posY = posY;
+    this.isBoardFull = isBoardFull;
   }
 }

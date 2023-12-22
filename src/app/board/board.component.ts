@@ -11,9 +11,15 @@ export class BoardComponent {
   @Input() posY: number;
 
   @Input() isOverallWonChild: boolean;
+  @Input() clickable: boolean; //pouvoir cliquer seulement si c'est une case rouge
+  @Input() posXClickable: number;
+  @Input() posYClickable: number;
 
   @Output() boardWonEmitter: EventEmitter<Pos> = new EventEmitter();
   @Output() posOfSquareToHightlight: EventEmitter<PosOfSquareToHightlight> = new EventEmitter();
+  @Output() boardFullEmitter: EventEmitter<BoardFull> = new EventEmitter();
+  @Output() squareArrayEmitter: EventEmitter<any[][]> = new EventEmitter();
+  @Output() playerChangeEmitter: EventEmitter<boolean> = new EventEmitter();
 
   pos: Pos;
   objectPosOfSquareToHightlight: PosOfSquareToHightlight;
@@ -24,6 +30,7 @@ export class BoardComponent {
   xIsNext: boolean;
   winner: string;
   isWon: boolean;
+  @Input() isSquareFull: boolean;
 
   xLittleSquare: number;
   yLittleSquare: number;
@@ -32,12 +39,16 @@ export class BoardComponent {
   posYOfSquareToHighlight: number;
   
   constructor(){
-    this.posX = 0;this
+    this.posX = 0;
     this.posY = 0;
     this.xLittleSquare = 0;
     this.yLittleSquare = 0;
     this.posXOfSquareToHighlight=0;
     this.posYOfSquareToHighlight=0;
+    this.isSquareFull = false;
+    this.clickable = false;
+    this.posXClickable = 0;
+    this.posYClickable = 0;
 
     this.square = [
       [0,0,0],
@@ -65,8 +76,7 @@ export class BoardComponent {
     console.log("X = "+ this.xLittleSquare + " Y = " + this.yLittleSquare);
     console.log("");
 
-    if(!this.isWon && !this.isOverallWonChild){
-      this.calculatePosForNextMove();
+    if(!this.isWon && !this.isOverallWonChild && this.clickable){
 
       if(this.square[ligne][colonne] == 0){
 
@@ -76,11 +86,16 @@ export class BoardComponent {
         else{
           this.square[ligne][colonne] = 2;
         }
+
+        this.calculatePosForNextMove();
+        this.playerChangeEmitter.emit(true);
       }
 
       if(!this.isOverallWonChild){
         this.calculateWinner();
       }
+
+      this.functIsBoardFull();
 
     }
   }
@@ -91,10 +106,35 @@ export class BoardComponent {
   }
 
   calculatePosForNextMove(){
-    this.objectPosOfSquareToHightlight.posX = this.xLittleSquare +1;
-    this.objectPosOfSquareToHightlight.posY = this.yLittleSquare +1;
+    this.objectPosOfSquareToHightlight.posX = this.xLittleSquare;
+    this.objectPosOfSquareToHightlight.posY = this.yLittleSquare;
 
     this.posOfSquareToHightlight.emit(this.objectPosOfSquareToHightlight);
+  }
+
+  functIsBoardFull(){
+    let freeSpace: boolean;
+    freeSpace = false;
+
+    for(let x=0; x<3; x++){
+      for(let y=0; y<3; y++){
+        if(this.square[x][y] == 0){
+          freeSpace = true;
+        }
+      }
+    }
+
+    if(this.isWon){
+      freeSpace = false;
+    }
+
+    if(freeSpace == false){
+      let objectBoardFull: BoardFull;
+      objectBoardFull = new BoardFull(this.posX, this.posY, true);
+
+      console.log("Full board emit !!!!!");
+      this.boardFullEmitter.emit(objectBoardFull);
+    }
   }
 
   calculateWinner(){
@@ -214,5 +254,17 @@ class PosOfSquareToHightlight{
   constructor(posX: number, posY: number){
     this.posX = posX;
     this.posY = posY;
+  }
+}
+
+class BoardFull{
+  posX: number;
+  posY: number;
+  isBoardFull: boolean;
+
+  constructor(posX:number, posY: number, isBoardFull: boolean){
+    this.posX = posX;
+    this.posY = posY;
+    this.isBoardFull = isBoardFull;
   }
 }

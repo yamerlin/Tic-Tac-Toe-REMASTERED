@@ -10,3 +10,7 @@
     height: 210px;
     border: 2px blue solid;
 }
+
+.redborder{
+    border: 2px red solid;
+}

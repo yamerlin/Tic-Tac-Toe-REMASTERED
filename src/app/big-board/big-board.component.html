@@ -1,14 +1,14 @@
 <h1>Joueur actuel : {{ player }}</h1>
 
 <button (click)="newGame()">Commencer une nouvelle partie</button>
-<!-- <button (click)="seeBigSquare()">see BigSquare array</button> -->
+<!-- <button (click)="seeFullBoard()">see board that are full</button> -->
 
 <h1 *ngIf="isOverallWon">{{ overallWinner }}</h1>
 
 <main>
     <div class="ligne" *ngFor="let ligne of square; let indexLigne = index">
-        <div class="case" *ngFor="let case of ligne; let indexColonne = index" [ngStyle]="{ border: posXOfSquareToHighlight -1 == indexLigne ? posYOfSquareToHighlight -1 == indexColonne && '2px red solid' : '2px blue solid' }">
-             <app-board [isOverallWonChild]="isOverallWon" [posX]="indexLigne" [posY]="indexColonne" (boardWonEmitter)="boardGotWonFunction($event)" (posOfSquareToHightlight)="hightlightSquare($event)" (click)="changePlayer()" [player]="player"/> 
+        <div class="case" *ngFor="let case of ligne; let indexColonne = index" [ngClass]="{'redborder': indexLigne === posXOfSquareToHighlight && indexColonne === posYOfSquareToHighlight}" (click)="changeClickable(indexLigne, indexColonne)">
+            <app-board [clickable]="clickable" [isOverallWonChild]="isOverallWon" [posX]="indexLigne" [posY]="indexColonne" (boardWonEmitter)="boardGotWonFunction($event)" (posOfSquareToHightlight)="hightlightSquare($event)" (boardFullEmitter)="putDataInArrayOfFullBoard($event)" (playerChangeEmitter)="changePlayer()" [player]="player"/> 
         </div>
     </div>
 </main>
