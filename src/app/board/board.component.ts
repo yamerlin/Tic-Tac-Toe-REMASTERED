@@ -11,9 +11,8 @@ export class BoardComponent {
   @Input() posY: number;
 
   @Input() isOverallWonChild: boolean;
-  @Input() clickable: boolean; //pouvoir cliquer seulement si c'est une case rouge
-  @Input() posXClickable: number;
-  @Input() posYClickable: number;
+
+  @Input() clickable: boolean;
 
   @Output() boardWonEmitter: EventEmitter<Pos> = new EventEmitter();
   @Output() posOfSquareToHightlight: EventEmitter<PosOfSquareToHightlight> = new EventEmitter();
@@ -46,9 +45,8 @@ export class BoardComponent {
     this.posXOfSquareToHighlight=0;
     this.posYOfSquareToHighlight=0;
     this.isSquareFull = false;
-    this.clickable = false;
-    this.posXClickable = 0;
-    this.posYClickable = 0;
+
+    this.clickable = true;
 
     this.square = [
       [0,0,0],

@@ -18,9 +18,11 @@ export class BigBoardComponent implements OnInit {
   posYOfSquareToHighlight: number;
   indexLigne: number;
   indexColonne: number;
-  clickable: boolean; //pouvoir cliquer seulement si c'est une case rouge
 
   arrayOfFullBoard: number[][];
+
+  posX: number;
+  posY: number;
 
   constructor(){
     this.overallWinner = "null";
@@ -48,7 +50,8 @@ export class BigBoardComponent implements OnInit {
     this.indexLigne = 0;
     this.indexColonne = 0;
 
-    this.clickable = false;
+    this.posX = 0;
+    this.posY = 0;
   }
 
   ngOnInit(): void {
@@ -144,15 +147,6 @@ export class BigBoardComponent implements OnInit {
     }
 
     return completed;
-  }
-
-  changeClickable(posX:number, posY:number){
-    if(posX == this.posXOfSquareToHighlight && posY == this.posYOfSquareToHighlight){
-      this.clickable = true;
-    }
-    else{
-      this.clickable = false;
-    }
   }
 
   putDataInArrayOfFullBoard(objectBoardFull: BoardFull){
