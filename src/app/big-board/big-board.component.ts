@@ -24,6 +24,8 @@ export class BigBoardComponent implements OnInit {
   posX: number;
   posY: number;
 
+  objectPosOfSquareToHightlight: PosOfSquareToHightlight;
+
   constructor(){
     this.overallWinner = "null";
     this.grilleOfBoardWon = [
@@ -52,6 +54,8 @@ export class BigBoardComponent implements OnInit {
 
     this.posX = 0;
     this.posY = 0;
+
+    this.objectPosOfSquareToHightlight = new PosOfSquareToHightlight(0,0);
   }
 
   ngOnInit(): void {
@@ -115,6 +119,7 @@ export class BigBoardComponent implements OnInit {
   hightlightSquare(objectPosOfSquareToHightlight: PosOfSquareToHightlight){
     let x = objectPosOfSquareToHightlight.posX;
     let y = objectPosOfSquareToHightlight.posY;
+    this.objectPosOfSquareToHightlight = objectPosOfSquareToHightlight;
 
     while(this.arrayOfFullBoard[x][y] == 1 && !this.isArrayOfFullBoardCompleted()){
       y = y + 1;
@@ -156,7 +161,7 @@ export class BigBoardComponent implements OnInit {
     console.log("Data rentrééé !!!");
 
     //let objectPosOfSquareToHightlight: PosOfSquareToHightlight = new PosOfSquareToHightlight(objectBoardFull.posX /*pas bonnn*/, objectBoardFull.posY);
-    //this.hightlightSquare(objectPosOfSquareToHightlight);
+    this.hightlightSquare(this.objectPosOfSquareToHightlight);
   }
 
   changePlayer(){
