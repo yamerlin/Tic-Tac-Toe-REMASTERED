@@ -18,6 +18,7 @@ export class BigBoardComponent implements OnInit {
   posYOfSquareToHighlight: number;
   indexLigne: number;
   indexColonne: number;
+  isFirstTurn: boolean;
 
   arrayOfFullBoard: number[][];
 
@@ -45,9 +46,10 @@ export class BigBoardComponent implements OnInit {
     ];
     this.isOverallWon = false;
     this.player = 'X';
+    this.isFirstTurn = true;
 
-    this.posXOfSquareToHighlight = 1;
-    this.posYOfSquareToHighlight = 1;
+    this.posXOfSquareToHighlight = 0;
+    this.posYOfSquareToHighlight = 0;
 
     this.indexLigne = 0;
     this.indexColonne = 0;
@@ -81,6 +83,11 @@ export class BigBoardComponent implements OnInit {
     ];
     this.isOverallWon = false;
     this.player = 'X';
+    this.isFirstTurn = true;
+    this.posXOfSquareToHighlight = 0;
+    this.posYOfSquareToHighlight = 0;
+    this.objectPosOfSquareToHightlight = new PosOfSquareToHightlight(0,0);
+    this.hightlightSquare(this.objectPosOfSquareToHightlight);
   }
 
   /*
@@ -140,6 +147,15 @@ export class BigBoardComponent implements OnInit {
     console.log("pos Y OfSquareToHighlight : " + this.posYOfSquareToHighlight);
   }
 
+  setClickable(){
+    if(this.isFirstTurn == true){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   isArrayOfFullBoardCompleted(){
     let completed: boolean = true;
 
@@ -165,6 +181,7 @@ export class BigBoardComponent implements OnInit {
   }
 
   changePlayer(){
+    this.isFirstTurn = false;
     if(this.player == "X"){
       this.player = "O";
     }

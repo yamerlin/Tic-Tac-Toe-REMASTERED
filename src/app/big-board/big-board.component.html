@@ -7,13 +7,13 @@
 
 <main>
     <div class="ligne" *ngFor="let ligne of square; let indexLigne = index">
-        <div class="case" *ngFor="let case of ligne; let indexColonne = index" [ngClass]="{'redborder': indexLigne === posXOfSquareToHighlight && indexColonne === posYOfSquareToHighlight}" 
+        <div class="case" *ngFor="let case of ligne; let indexColonne = index" [ngClass]="{'redborder': indexLigne === posXOfSquareToHighlight && indexColonne === posYOfSquareToHighlight && !isFirstTurn}" 
         posX="indexLigne" posY="indexColonne">
 
             <app-board [isOverallWonChild]="isOverallWon" [posX]="indexLigne" [posY]="indexColonne"
             (boardWonEmitter)="boardGotWonFunction($event)" (boardFullEmitter)="putDataInArrayOfFullBoard($event)"
             (posOfSquareToHightlight)="hightlightSquare($event)" (playerChangeEmitter)="changePlayer()" [player]="player"
-            [clickable]="indexLigne === posXOfSquareToHighlight && indexColonne === posYOfSquareToHighlight ? true : false"/> 
+            [clickable]="indexLigne === posXOfSquareToHighlight && indexColonne === posYOfSquareToHighlight ? true : setClickable()"/>
 
         </div>
     </div>
