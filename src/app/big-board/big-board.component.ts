@@ -113,7 +113,7 @@ export class BigBoardComponent implements OnInit {
     let x = objectPosOfSquareToHightlight.posX;
     let y = objectPosOfSquareToHightlight.posY;
 
-    while(this.arrayOfFullBoard[x][y] == 1){
+    while(this.arrayOfFullBoard[x][y] == 1 && !this.isArrayOfFullBoardCompleted()){
       y = y + 1;
       if(y > 2 ){
         y = 0;
@@ -132,6 +132,20 @@ export class BigBoardComponent implements OnInit {
     console.log("pos Y OfSquareToHighlight : " + this.posYOfSquareToHighlight);
   }
 
+  isArrayOfFullBoardCompleted(){
+    let completed: boolean = true;
+
+    for(let i = 0; i<3; i++){
+      for(let j = 0; j<3; j++){
+        if(this.arrayOfFullBoard[i][j] == 0){
+          completed = false;
+        }
+      }
+    }
+
+    return completed;
+  }
+
   changeClickable(posX:number, posY:number){
     if(posX == this.posXOfSquareToHighlight && posY == this.posYOfSquareToHighlight){
       this.clickable = true;
@@ -147,8 +161,8 @@ export class BigBoardComponent implements OnInit {
     console.log(objectBoardFull.posY);
     console.log("Data rentrééé !!!");
 
-    let objectPosOfSquareToHightlight: PosOfSquareToHightlight = new PosOfSquareToHightlight(objectBoardFull.posX, objectBoardFull.posY);
-    this.hightlightSquare(objectPosOfSquareToHightlight);
+    //let objectPosOfSquareToHightlight: PosOfSquareToHightlight = new PosOfSquareToHightlight(objectBoardFull.posX /*pas bonnn*/, objectBoardFull.posY);
+    //this.hightlightSquare(objectPosOfSquareToHightlight);
   }
 
   changePlayer(){

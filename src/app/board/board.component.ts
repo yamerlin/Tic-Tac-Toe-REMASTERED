@@ -69,6 +69,7 @@ export class BoardComponent {
   //JOUEUR O SYMBOLISE PAR 2
 
   makeMove(ligne: number, colonne: number){
+
     console.log("Position dans le grand carré : ");
     console.log("X = " + this.posX + " Y = " + this.posY);
     console.log("");
