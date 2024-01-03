@@ -1,5 +1,10 @@
 # TicTacToeREMASTERED
 
+There is two ways to play this game.
+
+Easiest one is to download the msi installer available in the "release" section and just install the game.
+
+Second option is to run the project by cloning the source code.
 To run this project you will need :
 - [Angular CLI](https://github.com/angular/angular-cli) version 17.x
 - [Node.js](https://nodejs.org/en/download/current) version 21.x
